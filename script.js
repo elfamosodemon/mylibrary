@@ -12,16 +12,16 @@ function Book(title, author, pages, read) {
 
 function showModal(modalID) {
     const modal = document.getElementById(modalID);
-    modal.classList.add('show-modal')
+    modal.classList.add('is-active')
     modal.addEventListener('click', (e) => {
-        if(e.target.id == modalID || e.target.className == 'close-button') {
-            modal.classList.remove('show-modal');
+        if(e.target.id == modalID || e.target.id == 'close-button') {
+            modal.classList.remove('is-active');
         }
     });   
 }
 function closeModal() {
     const modal = document.getElementById('modal-background');
-    modal.classList.remove('show-modal');
+    modal.classList.remove('is-active');
 
 }
 
@@ -37,26 +37,28 @@ function render() {
     
     myLibrary.forEach((book, index) => {
     const newBook = document.createElement('div')
-    newBook.classList.add("book")
+    newBook.classList.add("card")
     booksGrid.appendChild(newBook) 
     const title = document.createElement('p')
-    title.innerText = book.title
+    title.innerText = `Title: ${book.title}`
     newBook.appendChild(title) 
     const author = document.createElement('p')
-    author.innerText = book.author
+    author.innerText = `Author: ${book.author}`
     newBook.appendChild(author) 
     const pages = document.createElement('p')
-    pages.innerText = book.pages
+    pages.innerText = `Pages: ${book.pages}`
     newBook.appendChild(pages) 
     const read = document.createElement('p')
     if (book.read) {
-        read.innerText = 'Read'
+        read.innerText = 'Read';
+        read.classList.add('has-text-success')
     } else {
         read.innerText = 'To Be Read'
+        read.classList.add('has-text-danger')
     }
     newBook.appendChild(read) 
     const removeBtn = document.createElement('button')
-    removeBtn.classList.add('remove')
+    removeBtn.classList.add('remove','button','is-danger', 'is-medium', 'mt-2')
     removeBtn.innerText = 'Remove'
     newBook.appendChild(removeBtn)
     removeBtn.addEventListener('click', () => removeBook(index))
@@ -77,8 +79,6 @@ function populate() {
         e.preventDefault()
         const newBook = getBookFromInput()
         myLibrary.push(newBook)
-        console.log(newBook)
-        console.log(myLibrary)
         render()
         removeInput()
         closeModal()
